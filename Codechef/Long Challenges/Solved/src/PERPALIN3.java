@@ -1,43 +1,54 @@
+import java.io.BufferedReader;
+import java.io.InputStreamReader;
 import java.util.Arrays;
-import java.util.Scanner;
+import java.util.StringTokenizer;
  
-class PERPALIN3
+class PERPALIN2
 {
-    static int n,p;
-    static String period;
-    static Scanner fr=new Scanner(System.in);
+    static int len,box;
+    static String seq;
+    
     static StringBuilder sb=new StringBuilder();
+    
+    
     
     public static void main(String[] args)throws Exception
     {
-        for(int tc=fr.nextInt();tc>0;tc--)
+    	InputStreamReader input = new InputStreamReader(System.in); 
+        BufferedReader br = new BufferedReader(input);
+    	int tc=0;
+        for(tc=Integer.parseInt(br.readLine());tc>0;tc--)
         {
-            n=fr.nextInt();p=fr.nextInt();
-            if(p<=1 || n%p!=0 || n<3)
+        	String s=br.readLine();
+        	StringTokenizer st=new StringTokenizer(s," ");
+	    	int len=Integer.parseInt(st.nextToken());
+	    	int box=Integer.parseInt(st.nextToken());
+            
+            if(box<=1 || len%box!=0 || len<3)
             {
-                sb.append("impossible\n");
+            	  sb.append("impossible\n");
+                  continue;
+            }
+            StringBuilder fin=new StringBuilder();
+            if(!solver())
+            {
+            	sb.append("impossible\n");
                 continue;
             }
-            StringBuilder ans=new StringBuilder();
-            if(!setPeriod())
-            {
-                sb.append("impossible\n");
-                continue;
-            }
-            for(int i=0;i<n/p;i++)
-                ans.append(period);
-            sb.append(ans).append("\n");
+            for(int i=0;i<len/box;i++)
+                fin.append(seq);
+            sb.append(fin).append("\n");
         }
         System.out.print(sb);
     }
-    static boolean setPeriod()
+    static boolean solver()
     {
-        if(p<3)return false;
-        char[] ar=new char[p];
+        if(box<3)return false;
+        char[] ar=new char[box];
         Arrays.fill(ar, 'b');
-        if((p&1)==0)ar[p/2-1]=ar[p/2]='a';
-        else ar[p/2]='a';
-        period=String.valueOf(ar);
+        if((box&1)==0)ar[box/2-1]=ar[box/2]='a';
+        else ar[box/2]='a';
+        seq=String.valueOf(ar);
         return true;
     }
 }
